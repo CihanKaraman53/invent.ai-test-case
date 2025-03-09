@@ -1,5 +1,5 @@
 import React, { useEffect, useCallback } from "react";
-import {  useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { RootState } from "../store";
 import {
   setSearchQuery,
@@ -12,12 +12,11 @@ import MovieTable from "../components/MovieTable";
 import Button from "../components/button";
 import SearchInput from "../components/searchInput";
 import SelectInput from "../components/selectInput";
-import Pagination from "@mui/material/Pagination"; 
+import Pagination from "@mui/material/Pagination";
 import "../styles/components/home.scss";
 import { useAppDispatch } from "../store/hooks";
-import { categoryOptions } from "../constans/SearchCategories"; 
+import { categoryOptions } from "../constans/SearchCategories";
 import Error from "../components/error";
-import { SearchType } from "../constans/type";
 
 const Home = () => {
   const dispatch = useAppDispatch();
@@ -31,8 +30,7 @@ const Home = () => {
     error,
   } = useSelector((state: RootState) => state.movies);
 
-  console.log(movies)
-
+  // Fetch movies data when the component is mounted or any of the dependencies change
   useEffect(() => {
     dispatch(fetchMovies({ searchQuery, searchType, page: 1, selectedYear }));
   }, [dispatch]);
@@ -43,8 +41,8 @@ const Home = () => {
   };
 
   const handleSearchTypeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const value = e.target.value as keyof typeof SearchType; 
-    dispatch(setSearchType(SearchType[value])); 
+    const value = e.target.value as "movie" | "series" | "game";
+    dispatch(setSearchType(value));
   };
 
   const handleYearChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -91,7 +89,7 @@ const Home = () => {
 
       <div className="main-content">
         <h1 className="main-title">Movie List</h1>
-        {error && <Error message={`${error} Please search again.`}/>} 
+        {error && <Error message={`${error} Please search again.`} />}
         {!error && (
           <>
             <MovieTable movies={movies as any} />

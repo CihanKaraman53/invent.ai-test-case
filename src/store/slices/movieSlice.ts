@@ -1,8 +1,7 @@
 import { createSlice, PayloadAction, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-import { SearchType } from "../../constans/type";
 
-
+type SearchType = 'movie' | 'series' | 'game';
 export interface Movie {
   imdbID: string; 
   Title: string; 
@@ -33,7 +32,7 @@ const BASE_URL = `https://www.omdbapi.com/?apikey=${API_KEY}`;
 
 const initialState: MovieState = {
   searchQuery: "",
-  searchType: SearchType.Movie,
+  searchType: "movie" ,
   selectedYear: "",
   movies: [],
   movieDetail: null,
