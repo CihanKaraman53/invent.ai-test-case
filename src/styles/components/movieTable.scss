@@ -1,0 +1,47 @@
+@import '../../styles/abstracts/settings';  
+@import '../../styles/abstracts/helpers';   
+
+.movie-table-container {
+  margin-top: $spacing-large;
+  border-radius: 8px;
+  @include container;  
+}
+
+.movie-table {
+  width: 100%;
+  border-collapse: collapse;
+
+  th, td {
+    padding: $spacing-small;
+    border: 1px solid $border-color-light;  
+    text-align: left;
+  }
+
+  th {
+    background-color: $primary-bg-color;
+    color: #fff;
+  }
+
+  tbody {
+    tr {
+      &:hover {
+        background-color: $tertiary-bg-color;
+        cursor: pointer;
+      }
+    }
+  }
+}
+
+.movie-link {
+  color: $primary-color;
+  text-decoration: none;
+  font-weight: $font-weight-bold;
+
+  &:hover {
+    color: $secondary-bg-color;
+    text-decoration: underline;
+  }
+}
+
+
+

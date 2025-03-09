@@ -1,0 +1,41 @@
+@import "../../styles/abstracts/settings"; 
+
+.btn {
+  border-radius: $spacing-xsmall; 
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  text-align: center;
+
+  &--small {
+    padding: 4px 8px;
+    font-size: 12px;
+  }
+
+  &--medium {
+    padding: 8px 16px;
+    font-size: 16px;
+  }
+
+  &--large {
+    padding: 12px 24px;
+    font-size: 20px;
+  }
+
+  &--primary {
+    background-color: $primary-bg-color;
+    color: white;
+  }
+
+  &--secondary {
+    background-color: $secondary-bg-color;
+    color: white;
+  }
+
+
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+}

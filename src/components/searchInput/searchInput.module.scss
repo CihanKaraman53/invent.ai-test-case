@@ -1,0 +1,36 @@
+@import "../../styles/abstracts/settings"; 
+
+.searchContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+  width: 100%;
+  max-width: 400px; 
+}
+
+.searchWrapper {
+  border: 1px solid #ccc;
+  border-radius: 20px;
+  padding: $spacing-small;
+  width: 100%;
+  max-width: 400px;
+  background-color: $background-color-light;
+}
+.searchLabel {
+  font-size: 16px;
+  font-weight: 600;
+  color: #444;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+.searchInput {
+  background: none;
+  padding: $spacing-small;
+  border: none;
+  border-radius: $spacing-xsmall;
+  font-size: $font-size-medium;
+  outline: none;
+
+ 
+}
