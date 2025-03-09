@@ -12,9 +12,11 @@ $spacing-small: 8px;
 $spacing-medium: 16px;
 $spacing-large: 24px;
 
-$font-family: 'Arial', sans-serif;
+$font-primary: "Inter", sans-serif;         
+$font-secondary: "Playfair Display", serif; 
+$font-family: 'Arial', sans-serif;  
 $font-weight-normal: 400;
-$font-weight-bold: 700;
+$font-weight-bold: 700;    
 
 $border-color-light: #ccc;
 $border-color-dark: #333;
@@ -24,3 +26,4 @@ $secondary-color: $secondary-bg-color;
 
 $background-color-light: #f5f5f5;   
 $background-color-dark: #2c3e50;    
+    

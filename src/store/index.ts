@@ -1,5 +1,3 @@
-// src/store/index.ts veya store.ts
-
 import { configureStore } from '@reduxjs/toolkit';
 import { useDispatch } from 'react-redux';
 import movieReducer from './slices/movieSlice';

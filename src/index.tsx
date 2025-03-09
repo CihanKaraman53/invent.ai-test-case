@@ -1,11 +1,12 @@
-import React from "react";
+import React, { Suspense, lazy } from "react";
 import { createRoot } from "react-dom/client";
-import "../src/styles/main.scss";
-import  {store}  from "./store/index";
+import { store } from "./store/index";
 import { Provider } from "react-redux";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import MovieDetail from "./pages/MovieDetail";
-import Home from "../src/pages/Home";
+import Loading from "./components/loader";
+
+const MovieDetail = lazy(() => import("./pages/MovieDetail"));
+const Home = lazy(() => import("./pages/Home"));
 
 const container = document.getElementById("root");
 
@@ -15,10 +16,12 @@ if (container) {
   root.render(
     <Provider store={store}>
       <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="movie/:id" element={<MovieDetail />} />
-        </Routes>
+        <Suspense fallback={<Loading/>}>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="movie/:id" element={<MovieDetail />} />
+          </Routes>
+        </Suspense>
       </BrowserRouter>
     </Provider>
   );

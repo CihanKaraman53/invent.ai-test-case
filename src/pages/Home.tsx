@@ -16,7 +16,8 @@ import Pagination from "@mui/material/Pagination";
 import "../styles/components/home.scss";
 import { useAppDispatch } from "../store/hooks";
 import { categoryOptions } from "../constans/SearchCategories"; 
-import Error from "../components/error/Error";
+import Error from "../components/error";
+import { SearchType } from "../constans/type";
 
 const Home = () => {
   const dispatch = useAppDispatch();
@@ -27,9 +28,10 @@ const Home = () => {
     movies,
     page,
     totalPages,
-    loading,
     error,
   } = useSelector((state: RootState) => state.movies);
+
+  console.log(movies)
 
   useEffect(() => {
     dispatch(fetchMovies({ searchQuery, searchType, page: 1, selectedYear }));
@@ -41,8 +43,8 @@ const Home = () => {
   };
 
   const handleSearchTypeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const value = e.target.value as "movie" | "series" | "game";
-    dispatch(setSearchType(value));
+    const value = e.target.value as keyof typeof SearchType; 
+    dispatch(setSearchType(SearchType[value])); 
   };
 
   const handleYearChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -92,7 +94,7 @@ const Home = () => {
         {error && <Error message={`${error} Please search again.`}/>} 
         {!error && (
           <>
-            <MovieTable movies={movies} />
+            <MovieTable movies={movies as any} />
             <div className="pagination-container">
               <Pagination
                 count={totalPages}

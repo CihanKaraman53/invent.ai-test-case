@@ -1,27 +1,40 @@
-import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios';
+import { createSlice, PayloadAction, createAsyncThunk } from "@reduxjs/toolkit";
+import axios from "axios";
+import { SearchType } from "../../constans/type";
 
-type SearchType = 'movie' | 'series' | 'game';
 
-interface MovieState {
+export interface Movie {
+  imdbID: string; 
+  Title: string; 
+  Year: string; 
+  Genre: string;
+  Director: string; 
+  Actors: string; 
+  imdbRating: string; 
+  Poster: string; 
+  Plot: string;
+  Type: SearchType;
+}
+
+export interface MovieState {
   searchQuery: string;
   searchType: SearchType;
   selectedYear: string;
-  movies: any[];
-  movieDetail: any | null;
+  movies: Movie[];
+  movieDetail: Movie | null;
   page: number;
   totalPages: number;
   loading: boolean;
   error: string | null;
 }
 
-const API_KEY = 'e8117fd1';
+const API_KEY = "e8117fd1";
 const BASE_URL = `https://www.omdbapi.com/?apikey=${API_KEY}`;
 
 const initialState: MovieState = {
-  searchQuery: '',
-  searchType: 'movie',
-  selectedYear: '',
+  searchQuery: "",
+  searchType: SearchType.Movie,
+  selectedYear: "",
   movies: [],
   movieDetail: null,
   page: 1,
@@ -33,46 +46,57 @@ const initialState: MovieState = {
 export const fetchMovies = createAsyncThunk(
   "movies/fetchMovies",
   async (
-    { searchQuery, searchType, page, selectedYear }: 
-    { searchQuery: string; searchType: string; page: number; selectedYear: string },
+    {
+      searchQuery,
+      searchType,
+      page,
+      selectedYear,
+    }: {
+      searchQuery: string;
+      searchType: string;
+      page: number;
+      selectedYear: string;
+    },
     { rejectWithValue }
   ) => {
-    const yearParam = selectedYear ? `&y=${selectedYear}` : '';
-    const query = searchQuery || "batman"; 
+    const yearParam = selectedYear ? `&y=${selectedYear}` : "";
+    const query = searchQuery || "batman";
 
     try {
-      const response = await axios.get(`${BASE_URL}&s=${query}&type=${searchType}&page=${page}${yearParam}`);
+      const response = await axios.get(
+        `${BASE_URL}&s=${query}&type=${searchType}&page=${page}${yearParam}`
+      );
       const data = response.data;
 
-      if (data.Response === 'True') {
+      if (data.Response === "True") {
         return { movies: data.Search, totalResults: data.totalResults };
       } else {
         return rejectWithValue(data.Error);
       }
     } catch (error) {
-      return rejectWithValue('API isteği sırasında bir hata oluştu.');
+      return rejectWithValue("API isteği sırasında bir hata oluştu.");
     }
   }
 );
 
 export const fetchMovieDetail = createAsyncThunk(
-  'movies/fetchMovieDetail',
+  "movies/fetchMovieDetail",
   async (id: string, { rejectWithValue }) => {
     try {
       const response = await axios.get(`${BASE_URL}&i=${id}`);
-      if (response.data.Response === 'True') {
+      if (response.data.Response === "True") {
         return response.data;
       } else {
         return rejectWithValue(response.data.Error);
       }
     } catch (error) {
-      return rejectWithValue('Film detayları alınırken hata oluştu');
+      return rejectWithValue("Film detayları alınırken hata oluştu");
     }
   }
 );
 
 const movieSlice = createSlice({
-  name: 'movies',
+  name: "movies",
   initialState,
   reducers: {
     setSearchQuery(state, action: PayloadAction<string>) {
@@ -103,13 +127,13 @@ const movieSlice = createSlice({
       .addCase(fetchMovies.fulfilled, (state, action) => {
         state.loading = false;
         state.movies = action.payload.movies;
-        state.totalPages = Math.ceil(action.payload.totalResults / 10); 
+        state.totalPages = Math.ceil(action.payload.totalResults / 10);
       })
       .addCase(fetchMovies.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;
       })
-      
+
       .addCase(fetchMovieDetail.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -125,5 +149,12 @@ const movieSlice = createSlice({
   },
 });
 
-export const { setSearchQuery, setSearchType, setSelectedYear, setPage, setTotalPages, clearMovieDetail } = movieSlice.actions;
+export const {
+  setSearchQuery,
+  setSearchType,
+  setSelectedYear,
+  setPage,
+  setTotalPages,
+  clearMovieDetail,
+} = movieSlice.actions;
 export default movieSlice.reducer;

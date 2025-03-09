@@ -1,0 +1,33 @@
+@import "../../styles/abstracts/settings"; 
+
+body {
+  font-family: $font-primary;
+  font-size: $font-size-large;
+  line-height: 1.6;
+  color: $primary-color;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: $font-secondary;
+  font-weight: $font-weight-bold;
+  color: $secondary-color;
+  line-height: 1.3;
+  margin-bottom: $spacing-small;
+}
+
+p {
+  font-size: $font-size-medium;
+  margin-bottom: $spacing-medium;
+  color: $primary-color;
+}
+
+a {
+  color: $primary-color;
+  text-decoration: none;
+  transition: color 0.2s ease-in-out;
+
+  &:hover {
+    color: darken($primary-color, 10%);
+    text-decoration: underline;
+  }
+}
